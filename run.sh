@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
-# run.sh — build the main binary (with static lib linked in) then run it.
+# run.sh — build the main binary then run all plugin POCs.
 #
 # Assumes build-lib.sh has already been run at least once.
-# Re-runs it automatically if the libs are missing.
+# Re-runs it automatically if any artifact is missing.
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OUT_DIR="$REPO_ROOT/target/libs"
 
-# Auto-build libs if they don't exist yet.
-if [[ ! -f "$OUT_DIR/libmyshared.so" || ! -f "$OUT_DIR/libmystatic.a" ]]; then
-    echo "==> Libraries not found, running build-lib.sh first ..."
+# Auto-build native/wasm libs if they don't exist yet.
+if [[ ! -f "$OUT_DIR/libmyshared.so" || \
+      ! -f "$OUT_DIR/libmystatic.a"  || \
+      ! -f "$OUT_DIR/mywasm.wasm"    ]]; then
+    echo "==> Artifacts not found, running build-lib.sh first ..."
     bash "$REPO_ROOT/build-lib.sh"
 fi
 
@@ -21,6 +23,8 @@ MYSTATIC_DIR="$OUT_DIR" cargo build --release
 echo ""
 echo "==> Running POC ..."
 echo ""
-# MYSHARED_PATH tells main.rs where to dlopen libmyshared.so at runtime.
+
+# Each env var overrides the default path inside the binary.
 MYSHARED_PATH="$OUT_DIR/libmyshared.so" \
+MYWASM_PATH="$OUT_DIR/mywasm.wasm" \
     "$REPO_ROOT/target/release/rust-load-so"

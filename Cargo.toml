@@ -4,5 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-# Safe wrapper around dlopen/LoadLibrary for runtime library loading.
+# Native .so/.dll runtime loading.
 libloading = "0.8"
+
+# WASM runtime — wasmtime (AOT-compiled, production grade).
+wasmtime = "49"
+
+# WASM runtime — wasmer (alternative, JIT-based).
+wasmer = { version = "7.5.0-rc.1", default-features = false, features = [
+    "sys-default",
+] }
