@@ -28,7 +28,7 @@ extern "C" fn host_log(level: LogLevel, msg: *const c_char) {
 
 extern "C" fn host_get_version() -> *const c_char {
     // 'static literal — safe to return a raw pointer.
-    c"rust-load-so/1.0".as_ptr()
+    c"rust-load-plugins/1.0".as_ptr()
 }
 
 static HOST_API: HostApi = HostApi {

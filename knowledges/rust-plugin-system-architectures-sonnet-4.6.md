@@ -1,6 +1,6 @@
 # Rust Plugin System Architectures
 
-> Context: this repo (`rust-load-so`) is a POC that uses `libloading` to
+> Context: this repo (`rust-load-plugins`) is a POC that uses `libloading` to
 > `dlopen` a shared library at runtime and resolve symbols by name — the
 > raw building-block of approach 1 below.
 > The question: is that the right foundation for a real "Minecraft-style"

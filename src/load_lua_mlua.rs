@@ -34,7 +34,7 @@ pub fn demo_mlua(script_path: &Path) {
     lua.globals()
         .set(
             "host_get_version",
-            lua.create_function(|_, ()| Ok("rust-load-so/1.0".to_string()))
+            lua.create_function(|_, ()| Ok("rust-load-plugins/1.0".to_string()))
                 .unwrap(),
         )
         .unwrap();

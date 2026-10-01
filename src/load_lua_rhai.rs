@@ -23,7 +23,7 @@ pub fn demo_rhai(script_path: &Path) {
         };
         println!("[rhai][{lvl}] {msg}");
     });
-    engine.register_fn("host_get_version", || "rust-load-so/1.0");
+    engine.register_fn("host_get_version", || "rust-load-plugins/1.0");
 
     // Compile — errors are caught here, not at call time.
     let ast = engine

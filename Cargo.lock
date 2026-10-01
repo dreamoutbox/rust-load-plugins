@@ -2149,7 +2149,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rust-load-so"
+name = "rust-load-plugins"
 version = "0.1.0"
 dependencies = [
  "libloading",

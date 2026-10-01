@@ -29,4 +29,4 @@ MYSHARED_PATH="$OUT_DIR/libmyshared.so" \
 MYWASM_PATH="$OUT_DIR/mywasm.wasm" \
 MYLUA_PATH="$REPO_ROOT/mylua/math_plugin.lua" \
 MYRHAI_PATH="$REPO_ROOT/mylua/math_plugin.rhai" \
-    "$REPO_ROOT/target/release/rust-load-so"
+    "$REPO_ROOT/target/release/rust-load-plugins"
