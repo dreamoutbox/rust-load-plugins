@@ -1,0 +1,8 @@
+[package]
+name = "rust-load-so"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# Safe wrapper around dlopen/LoadLibrary for runtime library loading.
+libloading = "0.8"
