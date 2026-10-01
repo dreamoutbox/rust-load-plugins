@@ -14,3 +14,9 @@ wasmtime = "49"
 wasmer = { version = "7.5.0-rc.1", default-features = false, features = [
     "sys-default",
 ] }
+
+# Lua 5.4 scripting (links liblua statically).
+mlua = { version = "0.12", features = ["lua54", "vendored"] }
+
+# Rhai embedded scripting language (pure Rust, no C deps).
+rhai = "1.26"
