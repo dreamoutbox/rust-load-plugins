@@ -4,6 +4,81 @@ Proof-of-concept exploring dynamic runtime plugin architectures in Rust, inspire
 
 The host loads plugins at runtime, exports host capabilities through a unified SDK (`mysdk`), and triggers plugin lifecycle hooks (`plugin_init`) with bidirectional communication.
 
+```text
+$ ./run.sh
+==> Building main binary (links mystatic.a at compile time) ...
+==> Running POC ...
+
+Rust plugin POC — dynamic / static / wasm / scripting
+======================================================
+
+=== Dynamic (.so) — libloading / dlopen ===
+path : /rust-load-plugins/target/libs/libmyshared.so
+[plugin] myshared-math v1.0.0
+[host][INFO] myshared math plugin: init called
+[host][INFO] myshared math plugin: host is rust-load-plugins/1.0
+add(10, 3)      = 13
+subtract(10, 3) = 7
+multiply(10, 3) = 30
+divide(10, 3)   = 3
+divide(10, 0)   = 0 (zero-safe)
+-> library unloaded (drop).
+
+=== Static (.a) — symbols resolved at link time ===
+static_add(10, 3)      = 13
+static_subtract(10, 3) = 7
+static_multiply(10, 3) = 30
+static_divide(10, 3)   = 3
+static_divide(10, 0)   = 0 (zero-safe)
+-> no load/unload; code is baked into the binary.
+
+=== WASM plugin — wasmtime ===
+path : /rust-load-plugins/target/libs/mywasm.wasm
+[wasm][INFO] mywasm math plugin: init called
+[wasm][INFO] mywasm math plugin: host version 1.0
+add(10, 3)      = 13
+subtract(10, 3) = 7
+multiply(10, 3) = 30
+divide(10, 3)   = 3
+divide(10, 0)   = 0 (zero-safe)
+-> module unloaded (store + module dropped at end of function).
+
+=== WASM plugin — wasmer ===
+path : /rust-load-plugins/target/libs/mywasm.wasm
+[wasm][INFO] mywasm math plugin: init called
+[wasm][INFO] mywasm math plugin: host version 1.0
+add(10, 3)      = 13
+subtract(10, 3) = 7
+multiply(10, 3) = 30
+divide(10, 3)   = 3
+divide(10, 0)   = 0 (zero-safe)
+-> module unloaded (store + module dropped at end of function).
+
+=== Lua plugin — mlua (Lua 5.4) ===
+path : /rust-load-plugins/mylua/math_plugin.lua
+[lua][INFO] math_plugin.lua: plugin initialized
+[lua][INFO] math_plugin.lua: host is rust-load-plugins/1.0
+add(10, 3)      = 13
+subtract(10, 3) = 7
+multiply(10, 3) = 30
+divide(10, 3)   = 3
+divide(10, 0)   = 0 (zero-safe)
+-> Lua VM dropped (plugin unloaded).
+
+=== Scripting plugin — Rhai ===
+path : /rust-load-plugins/mylua/math_plugin.rhai
+[rhai][INFO] math_plugin.rhai: plugin initialized
+[rhai][INFO] math_plugin.rhai: host is rust-load-plugins/1.0
+add(10, 3)      = 13
+subtract(10, 3) = 7
+multiply(10, 3) = 30
+divide(10, 3)   = 3
+divide(10, 0)   = 0 (zero-safe)
+-> Rhai engine + AST dropped (plugin unloaded).
+
+Done.
+```
+
 ---
 
 ## Plugin Approaches
