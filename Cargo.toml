@@ -4,6 +4,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+# Shared host API contract (HostApi vtable, PluginMeta, WASM import names).
+mysdk = { path = "mysdk" }
+
 # Native .so/.dll runtime loading.
 libloading = "0.8"
 

@@ -6,3 +6,6 @@ edition = "2024"
 [lib]
 name = "myshared"
 crate-type = ["cdylib"]
+
+[dependencies]
+mysdk = { path = "../mysdk" }

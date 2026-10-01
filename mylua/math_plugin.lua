@@ -1,5 +1,12 @@
 -- math_plugin.lua — loaded by mlua POC.
--- The host calls these functions by name after loading this file.
+-- host_log(level, msg) and host_get_version() are registered by the host
+-- before this script is executed.
+
+-- Called once by the host after loading.
+function plugin_init()
+    host_log(0, "math_plugin.lua: plugin initialized")
+    host_log(0, "math_plugin.lua: host is " .. host_get_version())
+end
 
 function add(a, b)
     return a + b
@@ -13,9 +20,7 @@ function multiply(a, b)
     return a * b
 end
 
--- Returns 0 on divide-by-zero to mirror the other plugin behaviours.
--- Use integer floor-division (//) so the result is always an integer;
--- float division (/) produces 3.333… which math.tointeger then rejects as nil.
+-- Integer floor-division; returns 0 on divide-by-zero.
 function divide(a, b)
     if b == 0 then return 0 end
     return a // b

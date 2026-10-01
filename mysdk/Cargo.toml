@@ -1,0 +1,8 @@
+[package]
+name = "mysdk"
+version = "1.0.0"
+edition = "2024"
+
+# no_std-free; only uses core types so it compiles for any target including
+# wasm32-unknown-unknown (for wasm_imports module).
+[dependencies]
